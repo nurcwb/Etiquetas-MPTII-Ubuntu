@@ -1,0 +1,16 @@
+PROJETO MPT-II
+
+fonte/ — código-fonte, instalador, testes, fontes e roteiro de compilação.
+Etiquetas-MPTII-Kubuntu-26.04-x86_64.tar.gz — aplicativo portátil pronto.
+
+NO COMPUTADOR DE DESTINO:
+1. Extraia o compactado no local definitivo.
+2. Ligue a impressora e conecte o cabo USB de dados.
+3. Abra o terminal na pasta extraída e execute: bash instalar.sh
+4. Informe sua senha quando sudo solicitar.
+5. Abra Etiquetas MPT-II pelo menu do KDE.
+
+O instalador configura automaticamente a fila USB MPTII.
+Não execute o script inteiro com sudo. Se precisar instalar CUPS,
+serão necessários internet e um usuário com permissão de administrador.
+Compatibilidade: Kubuntu 26.04 x86_64, CUPS com suporte a filas raw.

@@ -1,0 +1,117 @@
+ETIQUETAS MPT-II — PORTÁTIL — v1.7
+
+Para Kubuntu 26.04 x86_64 (mesma base do computador usado na criação).
+Não garante compatibilidade com versões anteriores do Kubuntu ou ARM.
+Python, Tk, Pillow e fontes incluídos. Não precisa de pip.
+O instalador prepara o CUPS e cria a fila USB MPTII automaticamente.
+
+INSTALAR NO KDE
+1. Copie a pasta Etiquetas-MPTII INTEIRA para o local definitivo.
+   Não remova a subpasta _internal.
+2. Ligue e conecte a impressora por USB.
+3. Abra um terminal nessa pasta e execute: bash instalar.sh
+4. Busque Etiquetas MPT-II no menu de aplicativos.
+Não use sudo. O atalho pertence apenas ao seu usuário.
+Se mover a pasta, rode o instalador novamente no novo local.
+
+ABRIR SEM INSTALAR
+Execute o arquivo Etiquetas-MPTII, ou no terminal: ./Etiquetas-MPTII
+
+USAR
+Informe largura do papel, altura, fonte e alinhamento.
+Perfil de 8 pontos/mm, até 384 pontos (48 mm) em papel de 58 mm.
+A prévia mostra a área imprimível.
+
+IMPORTAR TXT
+Clique em Abrir TXT. Cada linha não vazia gera uma etiqueta.
+Aceita UTF-8 (inclusive BOM) e Windows-1252. Linhas vazias e espaços nas
+bordas são ignorados. Use Anterior/Próxima para conferir as etiquetas.
+Cópias se aplica a CADA linha. O lote inteiro é validado antes do envio.
+Máximo de 1.000 etiquetas por lote, incluindo cópias.
+Texto manual retorna à edição de uma etiqueta.
+
+STATUS
+Verde: USB com o número de série da fila presente e CUPS habilitado.
+Vermelho: USB desconectado.
+Amarelo: CUPS indisponível, fila pausada ou conexão não confirmada.
+Atualiza a cada 4 segundos. Não detecta bateria, tampa aberta ou falta de
+papel; conectado não garante impressão física. Confira a primeira cópia.
+
+IMPRESSÃO
+Imagem ESC/POS GS v 0, com acentos. Falta testar imagem nesta unidade;
+o teste anterior confirmou impressão USB de texto.
+Avanço por etiqueta: altura + intervalo configurado, sem corte automático.
+Rolos pré-cortados: sem calibração de sensor de intervalo/marca preta.
+
+REMOVER DO MENU
+Apague ~/.local/share/applications/etiquetas-mptii.desktop
+(ou o equivalente em XDG_DATA_HOME). Depois pode apagar a pasta.
+
+MOVIMENTO DO PAPEL (v1.2)
+Avançar papel usa quebras de linha, seguindo o teste USB de texto.
+A distância em mm é aproximada, em passos nominais de 4,23 mm.
+Padrão de 12 mm envia três quebras de linha. Confira o avanço físico.
+Não há confirmação de firmware/mecanismo capaz de voltar o papel.
+
+ETIQUETAS COM INTERVALO (v1.3)
+Altura da etiqueta: somente a parte adesiva, em mm (10 a 300).
+Espaço entre elas: intervalo entre duas etiquetas, em mm (0 a 20).
+Avanço de cada etiqueta = altura + espaço. Vale para texto manual,
+TXT e todas as cópias. Para papel contínuo, use espaço 0.
+Ajuste vertical: positivo desce o texto; negativo sobe (até +/-20 mm,
+limitado ao espaço disponível). Não altera o avanço total nem move o
+A prévia e o PNG incluem o intervalo em branco; a linha azul da prévia
+marca o limite da etiqueta e não é impressa.
+Alinhe a primeira etiqueta usando o avanço manual antes de imprimir.
+Teste uma cópia antes de enviar o lote. Não há leitura de sensor gap:
+o posicionamento é calculado e pode acumular desalinhamento físico.
+
+PERFIS DE TAMANHO (v1.4)
+1. Configure largura, altura da etiqueta, espaço e ajuste vertical.
+2. Digite um nome em Tamanhos configurados / nome do perfil.
+3. Clique em Salvar perfil.
+Os perfis aparecem na lista. Selecionar um perfil aplica suas medidas;
+o último selecionado ou salvo será restaurado na próxima abertura.
+Salvar com o mesmo nome atualiza as medidas. Excluir perfil remove
+apenas o perfil escolhido, mantendo as medidas atuais na tela.
+Após alterar medidas, clique em Salvar perfil para guardar a mudança.
+Fonte, conteúdo e número de cópias não fazem parte do perfil.
+
+Os dados ficam em perfis.json ao lado do executável. Mantenha esse
+arquivo ao atualizar e copie-o junto da pasta para levar seus tamanhos.
+É necessário ter permissão de escrita na pasta para salvar perfis.
+
+NOVA INTERFACE (v1.5)
+Três painéis: configurar etiqueta, escrever conteúdo e conferir prévia.
+Status USB/CUPS no cabeçalho; ações de avanço e impressão na barra inferior.
+Painel de medidas com rolagem para manter os campos acessíveis em janelas menores.
+Perfis anteriores em perfis.json são preservados.
+Atalhos: Ctrl+O importa TXT; Ctrl+S salva perfil; Ctrl+Enter imprime.
+Impressão, avanço e cálculo de etiquetas mantêm o protocolo já configurado.
+Testes: geometria, persistência, interface, TXT, navegação e envio simulado
+para o CUPS. Nenhum trabalho físico foi enviado durante a validação.
+
+Figma: https://www.figma.com/design/eHofUhwGg3OEDbBBbGq8Bt
+Arquivo criado; composição não concluída devido ao limite de chamadas
+MCP do plano Starter. A interface funcional foi implementada localmente.
+
+INTERFACE v1.6
+Controle de retorno removido. Movimento manual disponível: Avançar papel.
+
+INSTALAÇÃO AUTOMÁTICA DA IMPRESSORA (v1.7)
+Execute bash instalar.sh, sem sudo. O instalador pede a senha para as
+etapas administrativas e mantém o atalho no usuário correto do KDE.
+Requer Kubuntu/Ubuntu x86_64 com systemd e acesso administrativo via sudo.
+Se CUPS não estiver instalado, precisa de internet para instalar os
+pacotes cups e cups-client. Depois ativa o serviço cups.
+A impressora deve estar ligada e conectada por cabo USB de dados.
+A detecção usa o endereço informado pelo CUPS, inclusive o número de
+série: não fixa o endereço da impressora do computador original.
+Cria ou atualiza a fila MPTII em modo raw, habilitada e não compartilhada.
+Não muda a impressora padrão do sistema e não envia teste físico.
+Quando há mais de uma impressora compatível, pede a escolha do dispositivo.
+Se MPTII já apontar para outra impressora, pede confirmação de alteração.
+Se a impressora não for detectada, informa o problema e não inventa uma fila.
+O aviso de obsolescência de raw é esperado no CUPS 2.x. Se uma versão futura
+recusar filas raw, o instalador informa a falha e interrompe a instalação.
+A versão portátil continua destinada ao Kubuntu 26.04 x86_64.
